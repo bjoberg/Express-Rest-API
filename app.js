@@ -6,6 +6,7 @@ var routes = require("./routes");
 
 var jsonParser = require("body-parser").json; 
 var logger = require("morgan");
+var mongoose = require("mongoose");
 
 /**
  * This will configure the middleware to give use status codes for our API reponses
@@ -20,6 +21,24 @@ app.use(logger("dev"));
  * Note: this runs every request
  */
 app.use(jsonParser());
+
+mongoose.connect("mongodb://localhost:27017/treehouseExpressRestApi");
+
+var db = mongoose.connection;
+
+/**
+ * Catch errors and log them to the console
+ */
+db.on("error", function(err) {
+    console.error("conneciotn error:", err);
+});
+
+/**
+ * When the db is opened successfully, run db commands
+ */
+db.once("open", function() {
+    console.log("db connection succesful");
+});
 
 /**
  * When any request is received look through the routes
