@@ -2,11 +2,23 @@
 
 var express = require("express");
 var app = express();
+var routes = require("./routes");
 
-app.use(function(req, res, next) {
-    console.log("The leaves on the trees are", req.query.color);
-    next();
-});
+var jsonParser = require("body-parser").json; 
+
+/**
+ * When any request is received parse it as json
+ * 
+ * Note: this runs every request
+ */
+app.use(jsonParser());
+
+/**
+ * When any request is received look through the routes
+ * 
+ * Note: this runs every request
+ */
+app.use(routes);
 
 var port = process.env.PORT || 3000;
 
