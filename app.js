@@ -29,6 +29,29 @@ app.use(jsonParser());
  */
 app.use(routes)
 
+/**
+ * When a request cannot be found, forward to error handler
+ * 
+ * Error code: 404
+ */
+app.use(function(req, res, next) {
+    var err = new Error("Not found");
+    err.status = 404;
+    next(err);  // Use default error handler if custom error handler is not defined
+});
+
+/**
+ * Custom Error handler
+ */
+app.use(function(err, req, res, next){
+    res.status(err.status || 500);
+    res.json({
+        error: {
+            message: err.message
+        }
+    });
+});
+
 var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
