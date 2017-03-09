@@ -2,7 +2,7 @@
 
 var mongoose = require("mongoose");
 
-var Schema = mongoose.Schema();
+var Schema = mongoose.Schema;
 
 /**
  * return negative if a is before before b
@@ -47,7 +47,7 @@ AnswerSchema.method("vote", function(vote, callback) {
 var QuestionSchema = new Schema({
     text: String,
     createdAt: {type: Date, default: Date.now},
-    answers: [AnswersSchema]
+    answers: [AnswerSchema]
 });
 
 /**
